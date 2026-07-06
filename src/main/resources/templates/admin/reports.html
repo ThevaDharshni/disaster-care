@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reports · DCMS Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">DC</div>
+      <div class="sidebar-title">Disaster<br/>Care Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class="sidebar-item">📊 Dashboard</a>
+      <div class="sidebar-label">Manage</div>
+      <a href="/admin/shelters"  class="sidebar-item">🏕️ Shelters</a>
+      <a href="/admin/donations" class="sidebar-item">🎁 Donations</a>
+      <a href="/admin/missing"   class="sidebar-item">🔍 Missing Persons</a>
+      <div class="sidebar-label">Insights</div>
+      <a href="/admin/reports"   class="sidebar-item active">📈 Reports</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin/logout" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Logout</a>
+    </div>
+  </aside>
+
+  <div class="admin-content">
+    <div class="admin-topbar">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;">📈 Reports &amp; Analytics</div>
+    </div>
+    <div class="admin-body">
+
+      <!-- SUMMARY CARDS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">Total Shelters</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:var(--secondary);" th:text="${totalShelters}">0</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">Total Users</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:#60a5fa;" th:text="${totalUsers}">0</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">Donations</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:#a78bfa;" th:text="${totalDonations}">0</div>
+        </div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;text-align:center;">
+          <div style="font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:8px;">Still Missing</div>
+          <div style="font-family:'Rajdhani',sans-serif;font-size:36px;font-weight:700;color:#f87171;" th:text="${missingPersons}">0</div>
+        </div>
+      </div>
+
+      <!-- CHARTS ROW -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;">
+        <!-- Shelter Chart -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="font-size:14px;font-weight:600;margin-bottom:18px;">🏕️ Shelter Status Distribution</div>
+          <canvas id="shelterChart" height="200"></canvas>
+        </div>
+        <!-- Missing Persons Chart -->
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;">
+          <div style="font-size:14px;font-weight:600;margin-bottom:18px;">🔍 Missing Person Status</div>
+          <canvas id="missingChart" height="200"></canvas>
+        </div>
+      </div>
+
+      <!-- Donation Chart -->
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;">
+        <div style="font-size:14px;font-weight:600;margin-bottom:18px;">🎁 Donation Overview</div>
+        <canvas id="donationChart" height="100"></canvas>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script th:inline="javascript">
+  const activeShelters  = /*[[${activeShelters}]]*/ 0;
+  const fullShelters    = /*[[${fullShelters}]]*/ 0;
+  const totalShelters   = /*[[${totalShelters}]]*/ 0;
+  const closedShelters  = totalShelters - activeShelters - fullShelters;
+  const missingCount    = /*[[${missingPersons}]]*/ 0;
+  const foundCount      = /*[[${foundPersons}]]*/ 0;
+  const totalDonations  = /*[[${totalDonations}]]*/ 0;
+  const pendingDonations = /*[[${pendingDonations}]]*/ 0;
+
+  const chartDefaults = {
+    plugins: { legend: { labels: { color: '#8b949e', font: { family: 'Poppins', size: 12 } } } }
+  };
+
+  new Chart(document.getElementById('shelterChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Active', 'Full', 'Closed'],
+      datasets: [{ data: [activeShelters, fullShelters, closedShelters],
+        backgroundColor: ['rgba(22,163,74,0.8)', 'rgba(220,38,38,0.8)', 'rgba(100,100,120,0.8)'],
+        borderWidth: 0 }]
+    },
+    options: { ...chartDefaults, cutout: '65%' }
+  });
+
+  new Chart(document.getElementById('missingChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Still Missing', 'Found'],
+      datasets: [{ data: [missingCount, foundCount],
+        backgroundColor: ['rgba(220,38,38,0.8)', 'rgba(22,163,74,0.8)'],
+        borderWidth: 0 }]
+    },
+    options: chartDefaults
+  });
+
+  new Chart(document.getElementById('donationChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Total Donations', 'Pending', 'Processed'],
+      datasets: [{
+        label: 'Count',
+        data: [totalDonations, pendingDonations, totalDonations - pendingDonations],
+        backgroundColor: ['rgba(139,92,246,0.7)', 'rgba(234,88,12,0.7)', 'rgba(22,163,74,0.7)'],
+        borderRadius: 8, borderWidth: 0
+      }]
+    },
+    options: {
+      ...chartDefaults,
+      scales: {
+        x: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(255,255,255,0.05)' } },
+        y: { ticks: { color: '#8b949e' }, grid: { color: 'rgba(255,255,255,0.05)' }, beginAtZero: true }
+      }
+    }
+  });
+</script>
+</body>
+</html>

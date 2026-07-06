@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="admin-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">DC</div>
+      <div class="sidebar-title">Disaster<br/>Care Admin</div>
+    </div>
+    <div class="sidebar-label">Main</div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class="sidebar-item active">📊 Dashboard</a>
+      <div class="sidebar-label">Manage</div>
+      <a href="/admin/shelters"  class="sidebar-item">🏕️ Shelters</a>
+      <a href="/admin/donations" class="sidebar-item">🎁 Donations</a>
+      <a href="/admin/missing"   class="sidebar-item">🔍 Missing Persons</a>
+      <div class="sidebar-label">Insights</div>
+      <a href="/admin/reports"   class="sidebar-item">📈 Reports</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin/logout" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Logout</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="admin-content">
+    <div class="admin-topbar">
+      <div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;">Dashboard</div>
+        <div style="font-size:12.5px;color:var(--text-muted);">Welcome back, <span th:text="${adminName}">Admin</span></div>
+      </div>
+      <div style="font-size:13px;color:var(--text-muted);" id="clock"></div>
+    </div>
+
+    <div class="admin-body">
+      <!-- STAT CARDS -->
+      <div class="dash-grid">
+        <div class="dash-card orange">
+          <div class="dash-label">Total Shelters</div>
+          <div class="dash-val" th:text="${totalShelters}">0</div>
+          <div class="dash-icon">🏕️</div>
+        </div>
+        <div class="dash-card green">
+          <div class="dash-label">Active Shelters</div>
+          <div class="dash-val" th:text="${activeShelters}">0</div>
+          <div class="dash-icon">✅</div>
+        </div>
+        <div class="dash-card red">
+          <div class="dash-label">Full Shelters</div>
+          <div class="dash-val" th:text="${fullShelters}">0</div>
+          <div class="dash-icon">🔴</div>
+        </div>
+        <div class="dash-card blue">
+          <div class="dash-label">Registered Users</div>
+          <div class="dash-val" th:text="${totalUsers}">0</div>
+          <div class="dash-icon">👥</div>
+        </div>
+        <div class="dash-card purple">
+          <div class="dash-label">Donations Received</div>
+          <div class="dash-val" th:text="${totalDonations}">0</div>
+          <div class="dash-icon">🎁</div>
+        </div>
+        <div class="dash-card yellow">
+          <div class="dash-label">Missing Reports</div>
+          <div class="dash-val" th:text="${missingPersons}">0</div>
+          <div class="dash-icon">🔍</div>
+        </div>
+      </div>
+
+      <!-- QUICK LINKS -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px;">
+        <a href="/admin/shelters" class="btn btn-outline" style="justify-content:center;padding:14px;">🏕️ Manage Shelters</a>
+        <a href="/admin/donations" class="btn btn-outline" style="justify-content:center;padding:14px;">🎁 View Donations</a>
+        <a href="/admin/missing" class="btn btn-outline" style="justify-content:center;padding:14px;">🔍 Missing Persons</a>
+        <a href="/admin/reports" class="btn btn-outline" style="justify-content:center;padding:14px;">📈 Reports</a>
+      </div>
+
+      <!-- ALERT BOX -->
+      <div style="background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:14px;padding:20px 24px;">
+        <div style="font-size:14px;font-weight:600;color:#f87171;margin-bottom:8px;">🚨 Active Operation: Cyclone Maraikar Response</div>
+        <div style="font-size:13px;color:var(--text-muted);line-height:1.7;">
+          Districts on alert: Chennai (Disaster), Kanyakumari (Disaster), Nagapattinam (Warning), Cuddalore (Warning), Rameswaram (Warning).
+          Ensure all shelter capacities are updated and relief resources are replenished.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function tick() {
+    document.getElementById('clock').textContent = new Date().toLocaleString('en-IN');
+  }
+  tick(); setInterval(tick, 1000);
+</script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Match Results · DCMS Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">DC</div>
+      <div class="sidebar-title">Disaster<br/>Care Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class="sidebar-item">📊 Dashboard</a>
+      <div class="sidebar-label">Manage</div>
+      <a href="/admin/shelters"  class="sidebar-item">🏕️ Shelters</a>
+      <a href="/admin/donations" class="sidebar-item">🎁 Donations</a>
+      <a href="/admin/missing"   class="sidebar-item active">🔍 Missing Persons</a>
+      <div class="sidebar-label">Insights</div>
+      <a href="/admin/reports"   class="sidebar-item">📈 Reports</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin/logout" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Logout</a>
+    </div>
+  </aside>
+
+  <div class="admin-content">
+    <div class="admin-topbar">
+      <div>
+        <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;">🤖 AI Match Results</div>
+        <div style="font-size:12.5px;color:var(--text-muted);">
+          Matching against shelter registration records using Name + Age + Blood Group + Identification Mark
+        </div>
+      </div>
+      <a href="/admin/missing" class="btn btn-outline btn-sm">← Back</a>
+    </div>
+
+    <div class="admin-body">
+
+      <div th:if="${matches.empty}"
+           style="background:var(--card);border:1px solid var(--border);border-radius:14px;padding:48px;text-align:center;color:var(--text-muted);">
+        <div style="font-size:48px;margin-bottom:14px;">🔍</div>
+        <div style="font-size:16px;font-weight:600;margin-bottom:8px;">No Matches Found</div>
+        <div style="font-size:13.5px;">No shelter registrations match this missing person's profile with sufficient confidence.</div>
+      </div>
+
+      <div th:each="m : ${matches}" class="match-card">
+        <div class="match-header">
+          <div>
+            <div style="font-size:15px;font-weight:700;margin-bottom:4px;"
+                 th:text="${m.registration.name}">Match Name</div>
+            <div style="font-size:13px;color:var(--text-muted);">
+              Age: <strong th:text="${m.registration.age}">25</strong> &nbsp;·&nbsp;
+              Blood Group: <strong th:text="${m.registration.bloodGroup != null} ? ${m.registration.bloodGroup} : '—'">O+</strong> &nbsp;·&nbsp;
+              Shelter: <strong th:text="${m.shelter.name}">Shelter</strong>
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div class="accuracy-badge"
+                 th:classappend="${m.accuracy >= 80} ? 'high' : (${m.accuracy >= 50} ? 'medium' : 'low')"
+                 th:text="${m.accuracy} + '%'">92%</div>
+            <span class="pill"
+                  th:classappend="${m.confidence == 'HIGH'} ? 'pill-found' : (${m.confidence == 'MEDIUM'} ? 'pill-pending' : 'pill-rejected')"
+                  th:text="${m.confidence} + ' CONFIDENCE'">HIGH</span>
+          </div>
+        </div>
+
+        <div style="background:rgba(255,255,255,0.03);border-radius:10px;padding:14px 16px;margin-top:8px;">
+          <div style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;">
+            Match Details
+          </div>
+          <div th:each="detail : ${m.matchDetails}"
+               style="display:inline-block;background:rgba(22,163,74,0.1);border:1px solid rgba(22,163,74,0.2);
+                      color:#4ade80;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;
+                      margin:0 6px 6px 0;"
+               th:text="${detail}">Detail</div>
+        </div>
+
+        <div style="margin-top:14px;font-size:13px;color:var(--text-muted);">
+          📍 Shelter: <strong th:text="${m.shelter.name}">Shelter</strong> —
+          <span th:text="${m.shelter.location}">Location</span> &nbsp;·&nbsp;
+          District: <span th:text="${m.shelter.district}">District</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</body>
+</html>

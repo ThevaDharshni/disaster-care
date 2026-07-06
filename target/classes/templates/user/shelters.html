@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shelters · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">DC</div>
+    <div class="nav-title">Disaster<span>Care</span></div>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <a href="/user/map" class="btn btn-outline btn-sm">← Back to Map</a>
+    <a href="/user/logout" class="btn btn-primary btn-sm">Logout</a>
+  </div>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>🏕️ Shelters in <span style="color:var(--secondary);" th:text="${district}">District</span></h1>
+    <p>Click Register to book a spot in any active shelter. Full shelters are closed for new registrations.</p>
+  </div>
+
+  <div th:if="${param.registered}" class="page-body" style="padding-bottom:0;">
+    <div class="alert alert-success">✅ Shelter registration successful! You have been added to the camp.</div>
+  </div>
+
+  <div class="page-body">
+    <div class="table-wrap">
+      <div class="table-title">
+        Available Shelters
+        <span style="font-size:13px;color:var(--text-muted);" th:text="${shelters.size()} + ' shelters found'"></span>
+      </div>
+
+      <div th:if="${shelters.empty}" style="padding:40px;text-align:center;color:var(--text-muted);">
+        No shelters registered for this district yet.
+      </div>
+
+      <table th:if="${!shelters.empty}">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Shelter Name</th>
+            <th>Location</th>
+            <th>Capacity</th>
+            <th>Occupied</th>
+            <th>Available</th>
+            <th>Status</th>
+            <th>Registration</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="s : ${shelters}">
+            <td><code style="color:var(--text-muted);" th:text="'S-' + ${s.id}">S-1</code></td>
+            <td><strong th:text="${s.name}">Shelter</strong></td>
+            <td th:text="${s.location}">Location</td>
+            <td th:text="${s.capacity}">500</td>
+            <td th:text="${s.occupied}">320</td>
+            <td>
+              <span th:text="${s.available}" th:style="${s.available < 20} ? 'color:#f87171;font-weight:600;' : 'color:#4ade80;font-weight:600;'">180</span>
+            </td>
+            <td>
+              <span th:if="${s.status.name() == 'ACTIVE'}" class="pill pill-active">Active</span>
+              <span th:if="${s.status.name() == 'FULL'}" class="pill pill-full">Full</span>
+              <span th:if="${s.status.name() == 'CLOSED'}" class="pill pill-rejected">Closed</span>
+            </td>
+            <td>
+              <a th:if="${s.status.name() == 'ACTIVE'}"
+                 th:href="@{/user/register/{id}(id=${s.id})}"
+                 class="btn btn-success btn-sm">Register</a>
+              <span th:if="${s.status.name() != 'ACTIVE'}"
+                    style="font-size:12px;color:var(--text-muted);">Not Available</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</body>
+</html>

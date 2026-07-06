@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manage Shelters · DCMS Admin</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<div class="admin-layout">
+  <aside class="sidebar">
+    <div class="sidebar-brand">
+      <div class="sidebar-logo">DC</div>
+      <div class="sidebar-title">Disaster<br/>Care Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="/admin/dashboard" class="sidebar-item">📊 Dashboard</a>
+      <div class="sidebar-label">Manage</div>
+      <a href="/admin/shelters"  class="sidebar-item active">🏕️ Shelters</a>
+      <a href="/admin/donations" class="sidebar-item">🎁 Donations</a>
+      <a href="/admin/missing"   class="sidebar-item">🔍 Missing Persons</a>
+      <div class="sidebar-label">Insights</div>
+      <a href="/admin/reports"   class="sidebar-item">📈 Reports</a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="/admin/logout" class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">Logout</a>
+    </div>
+  </aside>
+
+  <div class="admin-content">
+    <div class="admin-topbar">
+      <div style="font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;">🏕️ Shelter Management</div>
+      <button class="btn btn-primary" onclick="document.getElementById('addModal').classList.add('active')">
+        + Add Shelter
+      </button>
+    </div>
+
+    <div class="admin-body">
+      <div th:if="${param.added}" class="alert alert-success" style="margin-bottom:20px;">✅ Shelter added successfully.</div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th><th>Shelter Name</th><th>Location</th><th>District</th>
+              <th>Capacity</th><th>Occupied</th><th>Available</th>
+              <th>Status</th><th>Registered</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="s : ${shelters}">
+              <td><code style="color:var(--text-muted);" th:text="'S-' + ${s.id}">S-1</code></td>
+              <td><strong th:text="${s.name}">Name</strong></td>
+              <td th:text="${s.location}">Location</td>
+              <td th:text="${s.district}">District</td>
+              <td th:text="${s.capacity}">500</td>
+              <td th:text="${s.occupied}">320</td>
+              <td>
+                <span th:text="${s.available}"
+                      th:style="${s.available < 20} ? 'color:#f87171;font-weight:700;' : 'color:#4ade80;font-weight:700;'">180</span>
+              </td>
+              <td>
+                <span th:if="${s.status.name() == 'ACTIVE'}" class="pill pill-active">Active</span>
+                <span th:if="${s.status.name() == 'FULL'}"   class="pill pill-full">Full</span>
+                <span th:if="${s.status.name() == 'CLOSED'}" class="pill pill-rejected">Closed</span>
+              </td>
+              <td th:text="${s.occupied}">320</td>
+              <td>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                  <!-- Update Status -->
+                  <form th:action="@{/admin/shelters/update/{id}(id=${s.id})}" method="post" style="display:inline;">
+                    <select name="status" class="form-control" style="padding:5px 8px;font-size:12px;width:auto;"
+                            onchange="this.form.submit()">
+                      <option th:value="ACTIVE" th:selected="${s.status.name() == 'ACTIVE'}">Active</option>
+                      <option th:value="FULL"   th:selected="${s.status.name() == 'FULL'}">Full</option>
+                      <option th:value="CLOSED" th:selected="${s.status.name() == 'CLOSED'}">Closed</option>
+                    </select>
+                  </form>
+                  <!-- Delete -->
+                  <form th:action="@{/admin/shelters/delete/{id}(id=${s.id})}" method="post" style="display:inline;"
+                        onsubmit="return confirm('Delete this shelter?')">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                  </form>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD SHELTER MODAL -->
+<div class="modal-overlay" id="addModal">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('addModal').classList.remove('active')">✕</button>
+    <h2>Add New Shelter</h2>
+    <p class="modal-sub">Fill in the shelter details below.</p>
+    <form action="/admin/shelters/add" method="post">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Shelter Name *</label>
+        <input class="form-control" type="text" name="name" placeholder="e.g. Government School" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Location *</label>
+        <input class="form-control" type="text" name="location" placeholder="Street / Area" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">District *</label>
+        <input class="form-control" type="text" name="district" placeholder="e.g. Chennai" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label class="form-label">Capacity *</label>
+        <input class="form-control" type="number" name="capacity" placeholder="Max people" min="1" required/>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">Add Shelter</button>
+    </form>
+  </div>
+</div>
+</body>
+</html>

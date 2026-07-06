@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Register · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--dark);padding:40px 16px;">
+<div style="width:100%;max-width:500px;">
+  <div style="text-align:center;margin-bottom:28px;">
+    <div style="width:56px;height:56px;background:#1d4ed8;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 14px;">🛡️</div>
+    <h2 style="font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;">Admin Registration</h2>
+    <p style="color:var(--text-muted);font-size:13px;margin-top:5px;">Register as an authorized relief camp administrator.</p>
+  </div>
+  <div style="background:var(--dark2);border:1px solid var(--border);border-radius:18px;padding:36px;">
+    <div th:if="${error}" class="alert alert-error" style="margin-bottom:16px;" th:text="${error}">Error</div>
+    <form action="/admin/register" method="post">
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Admin ID *</label>
+          <input class="form-control" type="text" name="adminId" placeholder="e.g. ADMIN002" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Full Name *</label>
+          <input class="form-control" type="text" name="name" placeholder="Your full name" required/>
+        </div>
+        <div class="form-group span-2">
+          <label class="form-label">Email Address *</label>
+          <input class="form-control" type="email" name="email" placeholder="official@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password *</label>
+          <input class="form-control" type="password" name="password" placeholder="Min 6 characters" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password *</label>
+          <input class="form-control" type="password" name="confirmPassword" placeholder="Re-enter password" required/>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:13px;font-size:15px;margin-top:20px;">
+        Create Account →
+      </button>
+    </form>
+    <div style="text-align:center;margin-top:16px;font-size:13px;color:var(--text-muted);">
+      Already registered? <a href="/admin/login" style="color:var(--secondary);">Login here →</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

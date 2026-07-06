@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Disaster Care Management System</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">DC</div>
+    <div class="nav-title">Disaster<span>Care</span></div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="btn btn-outline" onclick="openModal('userModal')">👤 User Login</button>
+    <button class="btn btn-primary" onclick="openModal('adminModal')">🛡️ Admin Login</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Live Emergency Operations
+    </div>
+    <h1>Disaster Care<br></h1>
+    <div class="tagline">Together We Can Save Lives.</div>
+    <p>A unified platform to manage emergency shelters, distribute relief resources, reunite families, and coordinate disaster response across Tamil Nadu.</p>
+    <div class="hero-btns">
+      <button class="btn btn-primary btn-lg" onclick="openModal('userModal')">🆘 User Login</button>
+      <button class="btn btn-secondary btn-lg" onclick="openModal('adminModal')">🛡️ Admin Portal</button>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><div class="hero-stat-val">18+</div><div class="hero-stat-label">Active Camps</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">4,286</div><div class="hero-stat-label">Sheltered</div></div>
+    <div class="hero-stat"><div class="hero-stat-val">163</div><div class="hero-stat-label">Reunited</div></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section-alt" id="about">
+  <div class="section-label">Who We Are</div>
+  <div class="about-grid">
+    <div>
+      <h2 class="section-title">Disaster Care Management System</h2>
+      <p class="section-sub">A centralized platform connecting rescue teams, relief camps, and affected citizens during natural disasters.</p>
+      <p style="color:var(--text-muted);font-size:14.5px;line-height:1.8;">
+        DCMS supports government authorities, NGOs, and volunteers with shelter tracking, victim registration, resource management, missing person search, and medical records — all in real time.
+      </p>
+      <p style="color:var(--text-muted);font-size:14.5px;line-height:1.8;margin-top:12px;">
+        Built for Tamil Nadu disaster operations, the system reduces manual coordination, speeds up family reunification, and gives decision-makers live visibility into every camp and resource.
+      </p>
+      <div class="about-stats">
+        <div class="about-stat"><div class="about-stat-val">18+</div><div class="about-stat-label">Active Relief Camps</div></div>
+        <div class="about-stat"><div class="about-stat-val">4,286</div><div class="about-stat-label">People Sheltered</div></div>
+        <div class="about-stat"><div class="about-stat-val">163</div><div class="about-stat-label">Families Reunited</div></div>
+        <div class="about-stat"><div class="about-stat-val">126</div><div class="about-stat-label">Volunteers Active</div></div>
+      </div>
+    </div>
+    <div class="about-image">
+      <img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=800&q=70" alt="Relief operations"/>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-label">What We Do</div>
+  <h2 class="section-title">Core Services</h2>
+  <p class="section-sub">Everything needed to manage disaster relief in one unified platform.</p>
+  <div class="services-grid">
+    <div class="service-card"><div class="service-icon">🏕️</div><h3>Shelter Management</h3><p>Real-time camp capacity tracking, occupancy monitoring, and facility status across all districts.</p></div>
+    <div class="service-card"><div class="service-icon">👥</div><h3>Victim Registration</h3><p>Register displaced individuals and families, assign them to camps, and maintain personal records securely.</p></div>
+    <div class="service-card"><div class="service-icon">📦</div><h3>Resource Distribution</h3><p>Track food, water, medicine, and clothing. Log every distribution with donor and recipient details.</p></div>
+    <div class="service-card"><div class="service-icon">🔍</div><h3>Missing Person Search</h3><p>Report missing individuals. AI-powered matching engine reunites families using name, age, blood group, and identification marks.</p></div>
+    <div class="service-card"><div class="service-icon">🏥</div><h3>Medical Assistance</h3><p>Record patient information and treatment notes. Monitor medical supply usage at each camp location.</p></div>
+    <div class="service-card"><div class="service-icon">📊</div><h3>Reports &amp; Analytics</h3><p>Auto-generated shelter, donation, and missing-person dashboards exportable for district authorities.</p></div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="section section-alt" id="gallery">
+  <div class="section-label">In Action</div>
+  <h2 class="section-title">Relief Operations Gallery</h2>
+  <p class="section-sub">Glimpses from active rescue and relief missions across Tamil Nadu.</p>
+  <div class="gallery-grid">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1547683905-f686c993aae5?w=600&q=70" alt="Flood rescue"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1584515979956-d9f6e5d09982?w=600&q=70" alt="Relief camp"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=600&q=70" alt="Volunteers"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1516733968668-dbdce39c4651?w=600&q=70" alt="Rescue team"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=600&q=70" alt="Food distribution"/></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1555436169-f87240b98c19?w=600&q=70" alt="Medical aid"/></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="section-label">Get In Touch</div>
+  <h2 class="section-title">Contact Us</h2>
+  <div class="contact-grid">
+    <div class="contact-info">
+      <p style="color:var(--text-muted);font-size:14.5px;line-height:1.7;margin-bottom:10px;">
+        Reach your nearest relief authority or send us a message for support and information.
+      </p>
+      <div class="contact-item"><div class="contact-icon">📞</div><div><strong>Emergency Helpline</strong><br/><span style="color:var(--text-muted);font-size:13.5px;">1077 (24/7 Disaster Helpline)</span></div></div>
+      <div class="contact-item"><div class="contact-icon">📧</div><div><strong>Email</strong><br/><span style="color:var(--text-muted);font-size:13.5px;">relief@tnsdma.gov.in</span></div></div>
+      <div class="contact-item"><div class="contact-icon">📍</div><div><strong>Head Office</strong><br/><span style="color:var(--text-muted);font-size:13.5px;">TNSDMA, Ezhilagam, Chennai - 600 005</span></div></div>
+    </div>
+    <div class="contact-form-wrap">
+      <div class="form-grid">
+        <div class="form-group"><label class="form-label">Your Name</label><input class="form-control" type="text" placeholder="Full name"/></div>
+        <div class="form-group"><label class="form-label">Email</label><input class="form-control" type="email" placeholder="your@email.com"/></div>
+        <div class="form-group span-2"><label class="form-label">Subject</label><input class="form-control" type="text" placeholder="How can we help?"/></div>
+        <div class="form-group span-2"><label class="form-label">Message</label><textarea class="form-control" placeholder="Your message..."></textarea></div>
+        <div class="form-group span-2"><button class="btn btn-primary" style="width:100%;padding:13px;">Send Message</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 Disaster Care Management System. Tamil Nadu State Disaster Management Authority.</div>
+  <div>Emergency: <strong style="color:var(--primary);">1077</strong></div>
+</footer>
+
+<!-- USER LOGIN MODAL -->
+<div class="modal-overlay" id="userModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('userModal')">✕</button>
+    <div class="modal-icon" style="background:rgba(214,40,40,0.12);">👤</div>
+    <h2>User Login</h2>
+    <p class="modal-sub">Enter your name and password to access shelter services. New users are registered automatically.</p>
+    <form action="/user/login-process" method="post">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Full Name</label>
+        <input class="form-control" type="text" name="name" placeholder="Enter your name" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Enter password" required/>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">Login / Register →</button>
+    </form>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="modal-overlay" id="adminModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('adminModal')">✕</button>
+    <div class="modal-icon" style="background:rgba(59,130,246,0.12);">🛡️</div>
+    <h2>Admin Login</h2>
+    <p class="modal-sub">Authorized personnel only. <a href="/admin/register" style="color:var(--secondary);">Register new admin →</a></p>
+    <form action="/admin/login-process" method="post">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label class="form-label">Email Address</label>
+        <input class="form-control" type="email" name="email" placeholder="admin@example.com" required/>
+      </div>
+      <div class="form-group" style="margin-bottom:20px;">
+        <label class="form-label">Password</label>
+        <input class="form-control" type="password" name="password" placeholder="Enter password" required/>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;padding:12px;">Login →</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function openModal(id) { document.getElementById(id).classList.add('active'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+  document.querySelectorAll('.modal-overlay').forEach(o => {
+    o.addEventListener('click', e => { if (e.target === o) o.classList.remove('active'); });
+  });
+  window.addEventListener('scroll', () => {
+    document.querySelector('.navbar').style.background =
+      window.scrollY > 50 ? 'rgba(13,17,23,0.98)' : 'rgba(13,17,23,0.92)';
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donate · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-brand"><div class="nav-logo">DC</div><div class="nav-title">Disaster<span>Care</span></div></div>
+  <div style="display:flex;gap:10px;">
+    <a href="/user/map" class="btn btn-outline btn-sm">← Map</a>
+    <a href="/user/logout" class="btn btn-primary btn-sm">Logout</a>
+  </div>
+</nav>
+
+<!-- Success overlay -->
+<div class="success-overlay" th:classappend="${success} ? 'show'" id="successOverlay">
+  <div class="success-box">
+    <div class="success-tick">✅</div>
+    <h3>Donation Submitted!</h3>
+    <p>Thank you for your contribution. Our team will contact you shortly.</p>
+    <button class="btn btn-success" style="margin-top:20px;width:100%;" onclick="document.getElementById('successOverlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>🎁 Food &amp; Relief Donation</h1>
+    <p>Donate food, clothes, water, medicine or other essentials to help disaster victims.</p>
+  </div>
+  <div class="page-body">
+    <div style="max-width:600px;">
+      <div class="table-wrap" style="padding:32px;">
+        <form action="/user/donation" method="post">
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label class="form-label">Donor Name *</label>
+              <input class="form-control" type="text" name="donorName" placeholder="Your full name" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Item Type *</label>
+              <select class="form-control" name="itemType" required>
+                <option value="">Select type</option>
+                <option value="FOOD">🍱 Food</option>
+                <option value="CLOTHES">👕 Clothes</option>
+                <option value="WATER">💧 Water</option>
+                <option value="MEDICINE">💊 Medicine</option>
+                <option value="OTHER">📦 Other Essentials</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Quantity *</label>
+              <input class="form-control" type="text" name="quantity" placeholder="e.g. 50 kg / 100 bottles" required/>
+            </div>
+            <div class="form-group span-2">
+              <label class="form-label">Pickup Address *</label>
+              <textarea class="form-control" name="address" placeholder="Full address for pickup" required></textarea>
+            </div>
+            <div class="form-group span-2">
+              <label class="form-label">Contact Number *</label>
+              <input class="form-control" type="tel" name="contactNumber" placeholder="+91 XXXXX XXXXX" required/>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary btn-lg" style="width:100%;margin-top:24px;">Submit Donation</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

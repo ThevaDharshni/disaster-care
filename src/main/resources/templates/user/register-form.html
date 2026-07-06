@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">DC</div>
+    <div class="nav-title">Disaster<span>Care</span></div>
+  </div>
+  <a href="/user/map" class="btn btn-outline btn-sm">← Back to Map</a>
+</nav>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>📋 Shelter Registration</h1>
+    <p th:text="'Registering for: ' + ${shelter.name} + ' — ' + ${shelter.location}">Shelter info</p>
+  </div>
+  <div class="page-body">
+    <div style="max-width:620px;">
+      <div style="background:rgba(22,163,74,0.08);border:1px solid rgba(22,163,74,0.2);border-radius:12px;padding:16px 20px;margin-bottom:24px;font-size:13.5px;">
+        🏕️ <strong th:text="${shelter.name}">Shelter</strong> &nbsp;·&nbsp;
+        Capacity: <strong th:text="${shelter.capacity}">500</strong> &nbsp;·&nbsp;
+        Available: <strong style="color:#4ade80;" th:text="${shelter.available}">180</strong> spots
+      </div>
+
+      <div class="table-wrap" style="padding:28px;">
+        <form th:action="@{/user/register/{id}(id=${shelter.id})}" method="post">
+          <div class="form-grid">
+            <div class="form-group span-2">
+              <label class="form-label">Full Name *</label>
+              <input class="form-control" type="text" name="name" placeholder="Your full name" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Age *</label>
+              <input class="form-control" type="number" name="age" min="1" max="120" placeholder="Age" required/>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Gender *</label>
+              <select class="form-control" name="gender" required>
+                <option value="">Select</option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHER">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Blood Group</label>
+              <select class="form-control" name="bloodGroup">
+                <option value="">Select</option>
+                <option>A+</option><option>A-</option>
+                <option>B+</option><option>B-</option>
+                <option>AB+</option><option>AB-</option>
+                <option>O+</option><option>O-</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Identification Mark</label>
+              <input class="form-control" type="text" name="identificationMark" placeholder="e.g. scar on left arm"/>
+            </div>
+          </div>
+          <div style="margin-top:24px;display:flex;gap:12px;">
+            <button type="submit" class="btn btn-success btn-lg">✅ Confirm Registration</button>
+            <a th:href="@{/user/shelters/{d}(d=${shelter.district})}" class="btn btn-outline btn-lg">Cancel</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

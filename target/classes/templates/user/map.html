@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tamil Nadu Disaster Map · DCMS</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+<nav class="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo">DC</div>
+    <div class="nav-title">Disaster<span>Care</span></div>
+  </div>
+  <div style="display:flex;align-items:center;gap:20px;">
+    <span style="font-size:13px;color:var(--text-muted);">
+      Welcome, <strong th:text="${userName}">User</strong> &nbsp;|&nbsp;
+      ID: <code style="color:var(--secondary);" th:text="${userId}">USR00001</code>
+    </span>
+    <a href="/user/donation" class="btn btn-outline btn-sm">🎁 Donate</a>
+    <a href="/user/missing-person" class="btn btn-outline btn-sm">🔍 Report Missing</a>
+    <a href="/user/logout" class="btn btn-primary btn-sm">Logout</a>
+  </div>
+</nav>
+
+<!-- New user ID banner -->
+<div th:if="${newUserId}" style="background:rgba(22,163,74,0.15);border-bottom:1px solid rgba(22,163,74,0.3);padding:12px 60px;font-size:13.5px;">
+  ✅ Registered successfully! Your User ID: <strong style="color:#4ade80;" th:text="${newUserId}">USR00001</strong> — save this for future logins.
+</div>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <h1>🗺️ Tamil Nadu Disaster Map</h1>
+    <p>Select a district to view available shelters and register for relief services.</p>
+  </div>
+  <div class="page-body">
+
+    <!-- Legend -->
+    <div style="display:flex;gap:20px;margin-bottom:24px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;">
+        <div style="width:14px;height:14px;border-radius:3px;background:rgba(22,163,74,0.4);"></div> Safe District
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;">
+        <div style="width:14px;height:14px;border-radius:3px;background:rgba(234,88,12,0.4);"></div> Heavy Rain / Warning
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:13.5px;">
+        <div style="width:14px;height:14px;border-radius:3px;background:rgba(220,38,38,0.4);"></div> Disaster Affected
+      </div>
+    </div>
+
+    <div class="map-container">
+      <div class="tn-map">
+        <!-- ROW 1 -->
+        <a href="/user/shelters/Chennai" class="district-btn disaster">Chennai<br/><span style="font-size:10px;opacity:0.8;">🔴 Disaster</span></a>
+        <a href="/user/shelters/Thiruvallur" class="district-btn warning">Thiruvallur<br/><span style="font-size:10px;opacity:0.8;">🟠 Warning</span></a>
+        <a href="/user/shelters/Kancheepuram" class="district-btn safe">Kancheepuram<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Vellore" class="district-btn safe">Vellore<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Tiruvannamalai" class="district-btn safe">Tiruvannamalai<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+
+        <!-- ROW 2 -->
+        <a href="/user/shelters/Viluppuram" class="district-btn safe">Viluppuram<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Cuddalore" class="district-btn warning">Cuddalore<br/><span style="font-size:10px;opacity:0.8;">🟠 Warning</span></a>
+        <a href="/user/shelters/Nagapattinam" class="district-btn warning">Nagapattinam<br/><span style="font-size:10px;opacity:0.8;">🟠 Warning</span></a>
+        <a href="/user/shelters/Thanjavur" class="district-btn safe">Thanjavur<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Tiruchirappalli" class="district-btn safe">Tiruchirappalli<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+
+        <!-- ROW 3 -->
+        <a href="/user/shelters/Salem" class="district-btn safe">Salem<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Erode" class="district-btn safe">Erode<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Coimbatore" class="district-btn safe">Coimbatore<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Tiruppur" class="district-btn safe">Tiruppur<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Madurai" class="district-btn safe">Madurai<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+
+        <!-- ROW 4 -->
+        <a href="/user/shelters/Dindigul" class="district-btn safe">Dindigul<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Theni" class="district-btn safe">Theni<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Virudhunagar" class="district-btn safe">Virudhunagar<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Rameswaram" class="district-btn warning">Rameswaram<br/><span style="font-size:10px;opacity:0.8;">🟠 Warning</span></a>
+        <a href="/user/shelters/Tirunelveli" class="district-btn safe">Tirunelveli<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+
+        <!-- ROW 5 -->
+        <a href="/user/shelters/Thoothukudi" class="district-btn safe">Thoothukudi<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Krishnagiri" class="district-btn safe">Krishnagiri<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Dharmapuri" class="district-btn safe">Dharmapuri<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+        <a href="/user/shelters/Kanyakumari" class="district-btn disaster">Kanyakumari<br/><span style="font-size:10px;opacity:0.8;">🔴 Disaster</span></a>
+        <a href="/user/shelters/Pudukkottai" class="district-btn safe">Pudukkottai<br/><span style="font-size:10px;opacity:0.8;">🟢 Safe</span></a>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
