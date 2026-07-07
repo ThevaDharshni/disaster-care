@@ -87,7 +87,7 @@ button, input, select, textarea { font-family: inherit; }
 
 .nav-links a {
   font-size: 14px; font-weight: 500;
-  color: var(--text-muted);
+  color: #fff;
   position: relative;
   transition: color 0.2s;
 }

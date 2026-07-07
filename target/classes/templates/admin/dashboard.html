@@ -19,9 +19,9 @@
     <nav class="sidebar-nav">
       <a href="/admin/dashboard" class="sidebar-item active">📊 Dashboard</a>
       <div class="sidebar-label">Manage</div>
-      <a href="/admin/shelters"  class="sidebar-item">🏕️ Shelters</a>
-      <a href="/admin/donations" class="sidebar-item">🎁 Donations</a>
-      <a href="/admin/missing"   class="sidebar-item">🔍 Missing Persons</a>
+      <a href="/admin/shelters"  class="sidebar-item"> Shelters</a>
+      <a href="/admin/donations" class="sidebar-item"> Donations</a>
+      <a href="/admin/missing"   class="sidebar-item"> Missing Persons</a>
       <div class="sidebar-label">Insights</div>
       <a href="/admin/reports"   class="sidebar-item">📈 Reports</a>
     </nav>
@@ -66,12 +66,12 @@
         <div class="dash-card purple">
           <div class="dash-label">Donations Received</div>
           <div class="dash-val" th:text="${totalDonations}">0</div>
-          <div class="dash-icon">🎁</div>
+          <div class="dash-icon"></div>
         </div>
         <div class="dash-card yellow">
           <div class="dash-label">Missing Reports</div>
           <div class="dash-val" th:text="${missingPersons}">0</div>
-          <div class="dash-icon">🔍</div>
+          <div class="dash-icon"></div>
         </div>
       </div>
 
